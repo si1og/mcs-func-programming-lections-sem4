@@ -391,11 +391,12 @@ instance Ord SixSidedDie' where
   compare S2' _ = GT
   compare _ S2' = LT
   compare S1' S1' = EQ
-  compare S1' _ = GT -- !warning!
-  compare _ S1' = LT -- !warning!
-  compare _ _ = undefined -- !warning!
-  -- myDie > S5'
-  -- myDie <= S5'
+
+-- compare S1' _ = GT -- !warning!
+-- compare _ S1' = LT -- !warning!
+-- compare _ _ = undefined -- !warning!
+-- myDie > S5'
+-- myDie <= S5'
 
 {-
 Минимальное определение Ord: compare | (<=)
@@ -610,19 +611,150 @@ myCabalProject
   |- myCabalProject.cabal -- описание пакетов, зависимостей и прочие метаданные
                              (важный файл, можно все поломать, пишите аккуратно)
 
+----
+ilyasemenov@mac-air-m3 myCabalProject % cabal init
+Config file path source is default config file.
+Config file not found: /Users/ilyasemenov/.config/cabal/config
+Writing default configuration to /Users/ilyasemenov/.config/cabal/config
+Warning: The package list for 'hackage.haskell.org' does not exist. Run 'cabal
+update' to download it.
+What does the package build:
+1) Library
+\* 2) Executable
+3) Library and Executable
+4) Test suite
+Your choice? [default: Executable]
+Please choose version of the Cabal specification to use:
+1) 1.24
+2) 2.0   (support for Backpack, internal sub-libs, '^>=' operator)
+3) 2.2   (+ support for 'common', 'elif', redundant commas, SPDX)
+4) 2.4   (+ support for '**' globbing)
+\* 5) 3.0   (+ set notation for ==, common stanzas in ifs, more redundant commas, better pkgconfig-depends)
+6) 3.4   (+ sublibraries in 'mixins', optional 'default-language')
+7) 3.14  (+ build-type: Hooks)
+Your choice? [default: 3.0]
+Package name? [default: myCabalProject]
+Package version? [default: 0.1.0.0]
+Please choose a license:
+1) BSD-2-Clause
+\* 2) BSD-3-Clause
+3) Apache-2.0
+4) MIT
+5) MPL-2.0
+6) ISC
+7) GPL-2.0-only
+8) GPL-3.0-only
+9) LGPL-2.1-only
+10) LGPL-3.0-only
+11) AGPL-3.0-only
+12) GPL-2.0-or-later
+13) GPL-3.0-or-later
+14) LGPL-2.1-or-later
+15) LGPL-3.0-or-later
+16) AGPL-3.0-or-later
+17) Other (specify)
+Your choice? [default: BSD-3-Clause]
+Author name? [default: Ilya Semenov]
+Maintainer email? [default: hi@si1og.ru]
+Project homepage URL? [optional]
+Project synopsis? [optional]
+Project category:
+1) Codec
+2) Concurrency
+3) Control
+4) Data
+5) Database
+6) Development
+7) Distribution
+8) Game
+9) Graphics
+10) Language
+11) Math
+12) Network
+13) Sound
+14) System
+15) Testing
+16) Text
+17) Web
+18) Other (specify)
+Your choice? [default: (none)]
+What is the main module of the executable:
+\* 1) Main.hs
+2) Main.lhs
+3) Other (specify)
+Your choice? [default: Main.hs]
+Application directory:
+\* 1) app
+2) exe
+3) src-exe
+4) Other (specify)
+Your choice? [default: app]
+Choose a language for your executable:
+\* 1) Haskell2010
+2) Haskell98
+3) GHC2021 (requires at least GHC 9.2)
+4) GHC2024 (requires at least GHC 9.10)
+5) Other (specify)
+Your choice? [default: Haskell2010]
+Add informative comments to each field in the cabal file. (y/n)? [default: y]
+[Info] Using cabal specification: 3.0
+[Info] Creating fresh file LICENSE...
+[Info] Creating fresh file CHANGELOG.md...
+[Info] Creating fresh directory ./app...
+[Info] Creating fresh file app/Main.hs...
+[Info] Creating fresh file myCabalProject.cabal...
+[Warn] No synopsis given. You should edit the .cabal file and add one.
+[Info] You may want to edit the .cabal file and add a Description field.
+----
+
 3. Сборка проекта (выполняется в корневом каталоге проекта)
 cabal build
 -- cabal скачает необходимые зависимости из Hackage, скомпилирует их и проект (все новое закэшируется в папке)
 -- ! появится новая директория dist-newstyle
+
+----
+ilyasemenov@mac-air-m3 myCabalProject % cabal build
+Warning: The package list for 'hackage.haskell.org' does not exist. Run 'cabal
+update' to download it.
+Resolving dependencies...
+Build profile: -w ghc-9.6.7 -O1
+In order, the following will be built (use -v for more details):
+ - myCabalProject-0.1.0.0 (exe:myCabalProject) (first run)
+Configuring executable 'myCabalProject' for myCabalProject-0.1.0.0...
+Preprocessing executable 'myCabalProject' for myCabalProject-0.1.0.0...
+Building executable 'myCabalProject' for myCabalProject-0.1.0.0...
+[1 of 1] Compiling Main             ( app/Main.hs, dist-newstyle/build/aarch64-osx/ghc-9.6.7/myCabalProject-0.1.0.0/x/myCabalProject/build/myCabalProject/myCabalProject-tmp/Main.o )
+[2 of 2] Linking dist-newstyle/build/aarch64-osx/ghc-9.6.7/myCabalProject-0.1.0.0/x/myCabalProject/build/myCabalProject/myCabalProject
+----
 
 4. Запуск проекта
 cabal run
 -- автоматически выполнит build если есть изменения
 -- На выходе получим результаты работы main: Hello, Haskell!
 
+----
+ilyasemenov@mac-air-m3 myCabalProject % cabal run
+Hello, Haskell!
+-----
+
 ~. Запуск интерактивного режима для удобства разработки (Read-Eval-Print Loop)
 cabal repl
 -- ! загрузится ghci, но в этом случае она будет содержать в себе все функции, библиотеки, модули и пр. которые есть в проекте с учетом доступа и видимости из main
+
+----
+ilyasemenov@mac-air-m3 myCabalProject % git add .gitignore
+fatal: pathspec '.gitignore' did not match any files
+ilyasemenov@mac-air-m3 myCabalProject % cabal repl
+Build profile: -w ghc-9.6.7 -O1
+In order, the following will be built (use -v for more details):
+ - myCabalProject-0.1.0.0 (interactive) (exe:myCabalProject) (configuration changed)
+Configuring executable 'myCabalProject' for myCabalProject-0.1.0.0...
+Preprocessing executable 'myCabalProject' for myCabalProject-0.1.0.0...
+GHCi, version 9.6.7: https://www.haskell.org/ghc/  :? for help
+[1 of 2] Compiling Main             ( app/Main.hs, interpreted )
+Ok, one module loaded.
+ghci>
+----
 
 -------------------------------
 Добавление зависимостей в проект:

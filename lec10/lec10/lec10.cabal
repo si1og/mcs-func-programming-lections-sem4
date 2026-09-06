@@ -1,0 +1,89 @@
+cabal-version: 2.2
+
+-- This file has been generated from package.yaml by hpack version 0.39.1.
+--
+-- see: https://github.com/sol/hpack
+
+name:           lec10
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/lec10#readme>
+homepage:       https://github.com/githubuser/lec10#readme
+bug-reports:    https://github.com/githubuser/lec10/issues
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2026 Author name here
+license:        BSD-3-Clause
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    CHANGELOG.md
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/lec10
+
+library
+  exposed-modules:
+      MonadIO
+      MonadLogic
+      MonadPar
+      MonadRWS
+      MonadState
+  other-modules:
+      Paths_lec10
+  autogen-modules:
+      Paths_lec10
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
+  build-depends:
+      base >=4.7 && <5
+    , deepseq >=1.5.0.0
+    , logict >=0.8.2.0
+    , mtl >=2.0
+    , parallel >=3.2.0.0
+    , stm
+    , time
+  default-language: Haskell2010
+
+executable lec10-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_lec10
+  autogen-modules:
+      Paths_lec10
+  hs-source-dirs:
+      app
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -eventlog -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , deepseq >=1.5.0.0
+    , lec10
+    , logict >=0.8.2.0
+    , mtl >=2.0
+    , parallel >=3.2.0.0
+    , stm
+    , time
+  default-language: Haskell2010
+
+test-suite lec10-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_lec10
+  autogen-modules:
+      Paths_lec10
+  hs-source-dirs:
+      test
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -eventlog -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , deepseq >=1.5.0.0
+    , lec10
+    , logict >=0.8.2.0
+    , mtl >=2.0
+    , parallel >=3.2.0.0
+    , stm
+    , time
+  default-language: Haskell2010
